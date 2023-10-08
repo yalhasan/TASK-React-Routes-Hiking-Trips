@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import tripsData from "../tripsData";
 import SearchBar from "./SearchBar";
 import TripItem from "./TripItem";
+import { useSearchParams } from "react-router-dom";
 
 function TripsList() {
   const [query, setQuery] = useState("");
   const trips = tripsData
     .filter((trip) => trip.name.toLowerCase().includes(query.toLowerCase()))
     .map((trip, index) => <TripItem trip={trip} key={index} />);
+
+  let [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
   return (
     <section className="page-section portfolio" id="portfolio">
       <div className="container">
@@ -15,10 +19,29 @@ function TripsList() {
           Explore Trips
         </h2>
         <br />
+
+        {searchParams.get("difficulty")}
         <SearchBar setQuery={setQuery} />
         <center>
-          <button className="btn btn-primary btn-xl">Easy</button>
-          <button className="btn btn-primary btn-xl">Moderate</button>
+          <button
+            className="btn btn-primary btn-xl"
+            onClick={() => {
+              setSearchParams({ ...searchParams, difficulty: "easy" });
+            }}
+          >
+            Easy
+          </button>
+          <button
+            className="btn btn-primary btn-xl"
+            onClick={() => {
+              setSearchParams((searchParams) => ({
+                ...searchParams,
+                difficulty2: "jhkhg",
+              }));
+            }}
+          >
+            Moderate
+          </button>
           <button className="btn btn-primary btn-xl">Hard</button>
         </center>
         <div className="divider-custom">
